@@ -4,6 +4,10 @@
 (function($) {
     'use strict';
 
+    function escapeHtml(str) {
+        return $('<div>').text(str).html();
+    }
+
     // Variables globales
     var currentContact = '';
     var messagesContainer = $('#messages-container');
@@ -169,8 +173,8 @@
             var contact = contacts[i];
             var activeClass = contact.phone_number === currentContact ? ' active' : '';
             
-            html += '<div class="wp-sms-voipms-contact-item' + activeClass + '" data-phone="' + contact.phone_number + '" data-name="' + contact.name + '">';
-            html += '<span class="wp-sms-voipms-contact-name">' + contact.name + '</span>';
+            html += '<div class="wp-sms-voipms-contact-item' + activeClass + '" data-phone="' + contact.phone_number + '" data-name="' + escapeHtml(contact.name) + '">';
+            html += '<span class="wp-sms-voipms-contact-name">' + escapeHtml(contact.name) + '</span>';
             html += '<span class="wp-sms-voipms-contact-number">' + formatPhoneNumber(contact.phone_number) + '</span>';
             html += '</div>';
         }

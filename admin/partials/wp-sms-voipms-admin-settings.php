@@ -29,10 +29,10 @@ if (!defined('WPINC')) {
                 
                 <table class="form-table">
                     <tr valign="top">
-                        <th scope="row"><?php _e('Nom d\'utilisateur API', 'wp-sms-voipms'); ?></th>
+                        <th scope="row"><?php _e('Courriel du compte VoIP.ms', 'wp-sms-voipms'); ?></th>
                         <td>
                             <input type="text" name="wp_sms_voipms_api_username" value="<?php echo esc_attr(get_option('wp_sms_voipms_api_username')); ?>" class="regular-text" />
-                            <p class="description"><?php _e('Votre nom d\'utilisateur VoIP.ms', 'wp-sms-voipms'); ?></p>
+                            <p class="description"><?php _e('Le courriel associé à votre compte VoIP.ms', 'wp-sms-voipms'); ?></p>
                         </td>
                     </tr>
                     

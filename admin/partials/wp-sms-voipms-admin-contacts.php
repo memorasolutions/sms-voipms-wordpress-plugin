@@ -115,7 +115,26 @@ $custom_logo_url = $custom_logo_id ? wp_get_attachment_url($custom_logo_id) : ''
 </div>
 
 <script type="text/javascript">
+/* Localization for JS */
+var wp_sms_voipms_i18n = {
+    select_logo: '<?php _e('Sélectionner un logo', 'wp-sms-voipms'); ?>',
+    use_this_logo: '<?php _e('Utiliser ce logo', 'wp-sms-voipms'); ?>',
+    change_logo: '<?php _e('Changer le logo', 'wp-sms-voipms'); ?>',
+    add_logo: '<?php _e('Ajouter un logo', 'wp-sms-voipms'); ?>',
+    remove_logo: '<?php _e('Supprimer le logo', 'wp-sms-voipms'); ?>',
+    enter_phone_number: '<?php _e('Veuillez entrer un numéro de téléphone.', 'wp-sms-voipms'); ?>',
+    loading_contacts: '<?php _e('Chargement des contacts...', 'wp-sms-voipms'); ?>',
+    loading_messages: '<?php _e('Chargement des messages...', 'wp-sms-voipms'); ?>',
+    error_loading_contacts: '<?php _e('Erreur lors du chargement des contacts.', 'wp-sms-voipms'); ?>',
+    error_loading_messages: '<?php _e('Erreur lors du chargement des messages.', 'wp-sms-voipms'); ?>'
+};
+</script>
+
+<script type="text/javascript">
 jQuery(document).ready(function($) {
+    function escapeHtml(str) {
+        return $('<div>').text(str).html();
+    }
     // Charger les contacts
     loadContacts();
     
@@ -304,7 +323,7 @@ jQuery(document).ready(function($) {
             var lastMessage = contact.last_message ? formatTimestamp(contact.last_message) : '<?php _e('Aucun', 'wp-sms-voipms'); ?>';
             
             html += '<tr>';
-            html += '<td>' + contact.name + '</td>';
+            html += '<td>' + escapeHtml(contact.name) + '</td>';
             html += '<td>' + formatPhoneNumber(contact.phone_number) + '</td>';
             html += '<td>' + (contact.email || '-') + '</td>';
             html += '<td>' + lastMessage + '</td>';

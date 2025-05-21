@@ -37,11 +37,11 @@ msgid "Réglages"
 msgstr ""
 
 #: admin/class-wp-sms-voipms-admin.php:403
-msgid "Nom d'utilisateur API"
+msgid "Courriel du compte VoIP.ms"
 msgstr ""
 
 #: admin/class-wp-sms-voipms-admin.php:406
-msgid "Votre nom d'utilisateur VoIP.ms"
+msgid "Le courriel associé à votre compte VoIP.ms"
 msgstr ""
 
 #: admin/class-wp-sms-voipms-admin.php:411

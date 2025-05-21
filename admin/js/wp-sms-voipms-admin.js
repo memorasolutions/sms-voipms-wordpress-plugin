@@ -4,6 +4,10 @@
 (function($) {
     'use strict';
 
+    function escapeHtml(str) {
+        return $('<div>').text(str).html();
+    }
+
     // Variables globales
     var currentContact = '';
     var messagesContainer = $('#messages-container');
@@ -251,8 +255,8 @@
             var contact = contacts[i];
             var activeClass = contact.phone_number === currentContact ? ' active' : '';
             
-            html += '<li class="contact-item' + activeClass + '" data-phone="' + contact.phone_number + '" data-name="' + contact.name + '">';
-            html += '<span class="contact-name">' + contact.name + '</span>';
+            html += '<li class="contact-item' + activeClass + '" data-phone="' + contact.phone_number + '" data-name="' + escapeHtml(contact.name) + '">';
+            html += '<span class="contact-name">' + escapeHtml(contact.name) + '</span>';
             html += '<span class="contact-number">' + formatPhoneNumber(contact.phone_number) + '</span>';
             html += '</li>';
         }

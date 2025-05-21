@@ -213,4 +213,21 @@ class Wp_Sms_Voipms_Admin {
         array_unshift($links, $settings_link);
         return $links;
     }
+
+    /**
+     * Gérer la requête AJAX de test de connexion API.
+     */
+    public function ajax_test_api() {
+        check_ajax_referer('wp_sms_voipms_test_api', 'nonce');
+
+        $api    = new Wp_Sms_Voipms_Api();
+        $result = $api->check_balance();
+
+        if (isset($result['status']) && $result['status'] === 'success') {
+            wp_send_json_success(array('message' => __('Connexion réussie.', 'wp-sms-voipms')));
+        }
+
+        $error = isset($result['error']) ? $result['error'] : __('Échec de la connexion.', 'wp-sms-voipms');
+        wp_send_json_error(array('message' => $error));
+    }
 }

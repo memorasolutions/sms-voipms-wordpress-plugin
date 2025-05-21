@@ -33,6 +33,7 @@ class Wp_Sms_Voipms {
         $this->plugin_name = 'wp-sms-voipms';
 
         $this->load_dependencies();
+        $this->loader->add_action('plugins_loaded', $this, 'load_textdomain');
         $this->define_admin_hooks();
         $this->define_public_hooks();
         $this->define_shortcodes();
@@ -94,6 +95,9 @@ class Wp_Sms_Voipms {
         
         // Ajouter des liens dans la page des plugins
         $this->loader->add_filter('plugin_action_links_wp-sms-voipms/wp-sms-voipms.php', $plugin_admin, 'add_plugin_action_links');
+
+        // AJAX test de connexion API
+        $this->loader->add_action('wp_ajax_wp_sms_voipms_test_api', $plugin_admin, 'ajax_test_api');
     }
 
     /**
@@ -153,5 +157,12 @@ class Wp_Sms_Voipms {
      */
     public function get_version() {
         return $this->version;
+    }
+
+    /**
+     * Charger les fichiers de traduction.
+     */
+    public function load_textdomain() {
+        load_plugin_textdomain('wp-sms-voipms', false, dirname(plugin_basename(__FILE__)) . '/../languages');
     }
 }

@@ -52,6 +52,38 @@ class Wp_Sms_Voipms_Rest_Api {
             'callback' => array($this, 'check_balance'),
             'permission_callback' => array($this, 'manage_settings_permissions_check')
         ));
+
+        // Routes pour gérer les contacts
+        register_rest_route($this->namespace, '/contacts', array(
+            array(
+                'methods'  => 'GET',
+                'callback' => array($this, 'get_contacts'),
+                'permission_callback' => array($this, 'read_messages_permissions_check'),
+            ),
+            array(
+                'methods'  => 'POST',
+                'callback' => array($this, 'create_contact'),
+                'permission_callback' => array($this, 'manage_settings_permissions_check'),
+            ),
+        ));
+
+        register_rest_route($this->namespace, '/contacts/(?P<id>\d+)', array(
+            array(
+                'methods'  => 'GET',
+                'callback' => array($this, 'get_contact'),
+                'permission_callback' => array($this, 'read_messages_permissions_check'),
+            ),
+            array(
+                'methods'  => 'PUT',
+                'callback' => array($this, 'update_contact'),
+                'permission_callback' => array($this, 'manage_settings_permissions_check'),
+            ),
+            array(
+                'methods'  => 'DELETE',
+                'callback' => array($this, 'delete_contact'),
+                'permission_callback' => array($this, 'manage_settings_permissions_check'),
+            ),
+        ));
     }
     
     /**
@@ -215,5 +247,143 @@ class Wp_Sms_Voipms_Rest_Api {
                 array('status' => 500)
             );
         }
+    }
+
+    /**
+     * Récupérer la liste des contacts de l'utilisateur courant.
+     */
+    public function get_contacts($request) {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'voipms_sms_contacts';
+        $user_id = get_current_user_id();
+
+        $contacts = $wpdb->get_results(
+            $wpdb->prepare("SELECT id, phone_number, name, email, notes, created_at, updated_at FROM $table WHERE user_id = %d ORDER BY name", $user_id),
+            ARRAY_A
+        );
+
+        return new WP_REST_Response($contacts, 200);
+    }
+
+    /**
+     * Récupérer un contact spécifique.
+     */
+    public function get_contact($request) {
+        global $wpdb;
+
+        $id = (int) $request['id'];
+        $user_id = get_current_user_id();
+        $table = $wpdb->prefix . 'voipms_sms_contacts';
+
+        $contact = $wpdb->get_row(
+            $wpdb->prepare("SELECT id, phone_number, name, email, notes, created_at, updated_at FROM $table WHERE id = %d AND user_id = %d", $id, $user_id),
+            ARRAY_A
+        );
+
+        if (!$contact) {
+            return new WP_Error('not_found', __('Contact introuvable.', 'wp-sms-voipms'), array('status' => 404));
+        }
+
+        return new WP_REST_Response($contact, 200);
+    }
+
+    /**
+     * Créer un contact.
+     */
+    public function create_contact($request) {
+        global $wpdb;
+
+        $user_id = get_current_user_id();
+        $phone = preg_replace('/[^0-9]/', '', $request->get_param('phone_number'));
+        $name  = sanitize_text_field($request->get_param('name'));
+        $email = sanitize_email($request->get_param('email'));
+        $notes = sanitize_textarea_field($request->get_param('notes'));
+
+        if (empty($phone) || empty($name)) {
+            return new WP_Error('missing_parameters', __('Numéro et nom requis.', 'wp-sms-voipms'), array('status' => 400));
+        }
+
+        $table = $wpdb->prefix . 'voipms_sms_contacts';
+        $result = $wpdb->insert(
+            $table,
+            array(
+                'user_id'      => $user_id,
+                'phone_number'  => $phone,
+                'name'         => $name,
+                'email'        => $email,
+                'notes'        => $notes,
+                'created_at'   => current_time('mysql'),
+                'updated_at'   => current_time('mysql'),
+            )
+        );
+
+        if (!$result) {
+            return new WP_Error('db_error', __('Erreur lors de la création du contact.', 'wp-sms-voipms'), array('status' => 500));
+        }
+
+        $request['id'] = $wpdb->insert_id;
+        return $this->get_contact($request);
+    }
+
+    /**
+     * Mettre à jour un contact.
+     */
+    public function update_contact($request) {
+        global $wpdb;
+
+        $id      = (int) $request['id'];
+        $user_id = get_current_user_id();
+        $table   = $wpdb->prefix . 'voipms_sms_contacts';
+
+        $exists = $wpdb->get_var($wpdb->prepare("SELECT id FROM $table WHERE id = %d AND user_id = %d", $id, $user_id));
+        if (!$exists) {
+            return new WP_Error('not_found', __('Contact introuvable.', 'wp-sms-voipms'), array('status' => 404));
+        }
+
+        $data = array();
+        if (null !== $request->get_param('phone_number')) {
+            $data['phone_number'] = preg_replace('/[^0-9]/', '', $request->get_param('phone_number'));
+        }
+        if (null !== $request->get_param('name')) {
+            $data['name'] = sanitize_text_field($request->get_param('name'));
+        }
+        if (null !== $request->get_param('email')) {
+            $data['email'] = sanitize_email($request->get_param('email'));
+        }
+        if (null !== $request->get_param('notes')) {
+            $data['notes'] = sanitize_textarea_field($request->get_param('notes'));
+        }
+
+        if (empty($data)) {
+            return new WP_Error('nothing_to_update', __('Aucune donnée à mettre à jour.', 'wp-sms-voipms'), array('status' => 400));
+        }
+
+        $data['updated_at'] = current_time('mysql');
+
+        $updated = $wpdb->update($table, $data, array('id' => $id, 'user_id' => $user_id));
+        if (false === $updated) {
+            return new WP_Error('db_error', __('Erreur lors de la mise à jour du contact.', 'wp-sms-voipms'), array('status' => 500));
+        }
+
+        return $this->get_contact($request);
+    }
+
+    /**
+     * Supprimer un contact.
+     */
+    public function delete_contact($request) {
+        global $wpdb;
+
+        $id      = (int) $request['id'];
+        $user_id = get_current_user_id();
+        $table   = $wpdb->prefix . 'voipms_sms_contacts';
+
+        $deleted = $wpdb->delete($table, array('id' => $id, 'user_id' => $user_id));
+        if (!$deleted) {
+            return new WP_Error('not_found', __('Contact introuvable.', 'wp-sms-voipms'), array('status' => 404));
+        }
+
+        return new WP_REST_Response(true, 200);
     }
 }

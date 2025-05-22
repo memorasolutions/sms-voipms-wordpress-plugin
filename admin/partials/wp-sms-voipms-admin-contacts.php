@@ -125,7 +125,12 @@ var wp_sms_voipms_i18n = {
     enter_phone_number: '<?php _e('Veuillez entrer un numéro de téléphone.', 'wp-sms-voipms'); ?>',
     loading_messages: '<?php _e('Chargement des messages...', 'wp-sms-voipms'); ?>',
     error_loading_contacts: '<?php _e('Erreur lors du chargement des contacts.', 'wp-sms-voipms'); ?>',
-    error_loading_messages: '<?php _e('Erreur lors du chargement des messages.', 'wp-sms-voipms'); ?>'
+    error_loading_messages: '<?php _e('Erreur lors du chargement des messages.', 'wp-sms-voipms'); ?>',
+    no_contacts: '<?php _e('Aucun contact trouvé. Cliquez sur "Nouvelle conversation" pour commencer.', 'wp-sms-voipms'); ?>',
+    no_messages: '<?php _e('Aucun message dans cette conversation. Envoyez un message pour commencer.', 'wp-sms-voipms'); ?>',
+    sending: '<?php _e('Envoi...', 'wp-sms-voipms'); ?>',
+    error_sending: '<?php _e('Erreur lors de l\'envoi du message.', 'wp-sms-voipms'); ?>',
+    send: '<?php _e('Envoyer', 'wp-sms-voipms'); ?>'
 };
 </script>
 

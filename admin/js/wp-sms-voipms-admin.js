@@ -21,6 +21,7 @@
     var isLoadingContacts = false;
     var messagesOffset = 0;
     var messagesLimit = 50;
+    var messagesRefreshInterval = null;
     
     /**
      * Initialisation à la fin du chargement du DOM
@@ -43,7 +44,10 @@
         
         // Vérifier le hash URL pour activer l'onglet approprié
         checkUrlHash();
-        
+
+        // Charger la liste des contacts au chargement de la page
+        loadContacts();
+
         // Rafraîchir la liste des contacts uniquement sur demande
         // setInterval(refreshContactsList, 30000);
     });
@@ -332,7 +336,12 @@
     /**
      * Sélectionner une conversation
      */
-    function selectConversation(phoneNumber, name) {
+   function selectConversation(phoneNumber, name) {
+        // Arrêter l'intervalle de rafraîchissement précédent
+        if (messagesRefreshInterval) {
+            clearInterval(messagesRefreshInterval);
+        }
+
         currentContact = phoneNumber;
         
         // Mettre à jour l'interface
@@ -349,6 +358,11 @@
         
         // Charger les messages
         loadMessages(phoneNumber);
+
+        // Configurer le rafraîchissement automatique des messages
+        messagesRefreshInterval = setInterval(function() {
+            refreshMessages(phoneNumber);
+        }, 15000);
     }
     
     /**
@@ -387,6 +401,34 @@
             },
             complete: function() {
                 isLoadingMessages = false;
+            }
+        });
+    }
+
+    /**
+     * Rafraîchir les messages d'une conversation
+     */
+    function refreshMessages(phoneNumber) {
+        if (isLoadingMessages || phoneNumber !== currentContact) return;
+
+        $.ajax({
+            url: wp_sms_voipms.rest_url + 'messages',
+            method: 'GET',
+            data: {
+                contact: phoneNumber,
+                limit: 10,
+                offset: 0
+            },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-WP-Nonce', wp_sms_voipms.nonce);
+            },
+            success: function(response) {
+                if (response.length > 0 && messagesContainer.find('.message').length < response.length) {
+                    loadMessages(phoneNumber);
+                }
+            },
+            error: function(xhr) {
+                console.error('Erreur lors du rafraîchissement des messages:', xhr.responseText);
             }
         });
     }

@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: WP SMS VoIPms
- * Plugin URI: https://example.com/wp-sms-voipms
+ * Plugin URI: https://memora.solutions
  * Description: Plugin permettant d'envoyer et recevoir des SMS via l'API VoIP.ms directement depuis WordPress.
  * Version: 1.0.0
- * Author: Votre Nom
- * Author URI: https://example.com
+ * Author: MEMORA Solutions
+ * Author URI: https://memora.solutions
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: wp-sms-voipms

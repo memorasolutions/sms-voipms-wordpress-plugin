@@ -97,7 +97,7 @@ $user_did = $api->get_user_did(get_current_user_id());
 
 <script type="text/javascript">
 /* Localization for JS */
-var wp_sms_voipms_i18n = {
+  var wp_sms_voipms_i18n = {
     select_logo: '<?php _e('Sélectionner un logo', 'wp-sms-voipms'); ?>',
     use_this_logo: '<?php _e('Utiliser ce logo', 'wp-sms-voipms'); ?>',
     change_logo: '<?php _e('Changer le logo', 'wp-sms-voipms'); ?>',
@@ -106,6 +106,8 @@ var wp_sms_voipms_i18n = {
     enter_phone_number: '<?php _e('Veuillez entrer un numéro de téléphone.', 'wp-sms-voipms'); ?>',
     loading_messages: '<?php _e('Chargement des messages...', 'wp-sms-voipms'); ?>',
     error_loading_contacts: '<?php _e('Erreur lors du chargement des contacts.', 'wp-sms-voipms'); ?>',
-    error_loading_messages: '<?php _e('Erreur lors du chargement des messages.', 'wp-sms-voipms'); ?>'
-};
+  error_loading_messages: '<?php _e('Erreur lors du chargement des messages.', 'wp-sms-voipms'); ?>'
+  };
 </script>
+
+<div class="wp-sms-voipms-footer">Créé avec ❤️ par <a href="https://memora.solutions" target="_blank">MEMORA solutions</a></div>

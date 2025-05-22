@@ -1,6 +1,6 @@
 # WP SMS VoIPms
 
-Ce plugin permet d'envoyer et de recevoir des SMS via l'API VoIP.ms directement depuis WordPress.
+Ce plugin permet d'envoyer et de recevoir des SMS via l'API VoIP.ms directement depuis WordPress. Il est créé et maintenu par [MEMORA Solutions](https://memora.solutions).
 
 ## Installation
 1. Téléversez le dossier du plugin dans `wp-content/plugins`.
@@ -16,3 +16,13 @@ Ce plugin permet d'envoyer et de recevoir des SMS via l'API VoIP.ms directement 
   ```
 
 Un bouton permet également de tester la connexion à l'API depuis la page de réglages.
+
+### Configuration du webhook
+Pour recevoir les SMS entrants, configurez votre compte VoIP.ms afin d'envoyer les notifications HTTP POST vers l'URL suivante :
+
+```
+https://votre-site.com/wp-json/wp-sms-voipms/v1/receive
+```
+
+Remplacez `https://votre-site.com` par l'adresse de votre site WordPress.
+

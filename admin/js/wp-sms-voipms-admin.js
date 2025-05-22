@@ -4,6 +4,11 @@
 (function($) {
     'use strict';
 
+    if (typeof window.wp_sms_voipms === 'undefined') {
+        console.error('wp_sms_voipms object is missing');
+        return;
+    }
+
     function escapeHtml(str) {
         return $('<div>').text(str).html();
     }

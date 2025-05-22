@@ -39,7 +39,7 @@ if (!defined('WPINC')) {
                     <tr valign="top">
                         <th scope="row"><?php _e('Mot de passe API', 'wp-sms-voipms'); ?></th>
                         <td>
-                            <input type="password" name="wp_sms_voipms_api_password" value="<?php echo esc_attr(get_option('wp_sms_voipms_api_password')); ?>" class="regular-text" />
+                            <input type="password" name="wp_sms_voipms_api_password" class="regular-text" autocomplete="new-password" />
                             <p class="description"><?php _e('Votre mot de passe VoIP.ms', 'wp-sms-voipms'); ?></p>
                         </td>
                     </tr>

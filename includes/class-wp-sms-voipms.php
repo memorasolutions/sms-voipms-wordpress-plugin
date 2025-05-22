@@ -81,7 +81,7 @@ class Wp_Sms_Voipms {
      * Définir les hooks liés à la partie admin du plugin.
      */
     private function define_admin_hooks() {
-        $plugin_admin = new Wp_Sms_Voipms_Admin($this->get_plugin_name(), $this->get_version());
+        $plugin_admin = new Wp_Sms_Voipms_Admin($this->get_plugin_name() . '-admin', $this->get_version());
 
         // Ajouter les menus d'administration
         $this->loader->add_action('admin_menu', $plugin_admin, 'add_plugin_menu');
@@ -104,7 +104,7 @@ class Wp_Sms_Voipms {
      * Définir les hooks liés à la partie publique du plugin.
      */
     private function define_public_hooks() {
-        $plugin_public = new Wp_Sms_Voipms_Public($this->get_plugin_name(), $this->get_version());
+        $plugin_public = new Wp_Sms_Voipms_Public($this->get_plugin_name() . '-public', $this->get_version());
 
         // Ajouter les scripts et styles
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
@@ -115,7 +115,7 @@ class Wp_Sms_Voipms {
      * Définir les shortcodes.
      */
     private function define_shortcodes() {
-        $plugin_shortcodes = new Wp_Sms_Voipms_Shortcodes($this->get_plugin_name(), $this->get_version());
+        $plugin_shortcodes = new Wp_Sms_Voipms_Shortcodes($this->get_plugin_name() . '-public', $this->get_version());
         
         // Enregistrer les shortcodes
         add_shortcode('voipms_sms_interface', array($plugin_shortcodes, 'sms_interface_shortcode'));

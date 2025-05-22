@@ -209,16 +209,23 @@ class Wp_Sms_Voipms_Admin {
      * Crypter le mot de passe API avant enregistrement.
      */
     public function encrypt_api_password($password) {
-        if (!empty($password)) {
-            $key = defined('AUTH_KEY') ? AUTH_KEY : wp_salt('auth');
-            $iv  = substr(hash('sha256', $key), 0, 16);
-            $encrypted = openssl_encrypt($password, 'AES-256-CBC', $key, 0, $iv);
-            if ($encrypted) {
-                return 'enc::' . base64_encode($encrypted);
-            }
+        if (empty($password)) {
+            return get_option('wp_sms_voipms_api_password');
+        }
+
+        if (strpos($password, 'enc::') === 0) {
             return $password;
         }
-        return get_option('wp_sms_voipms_api_password');
+
+        $key = defined('AUTH_KEY') ? AUTH_KEY : wp_salt('auth');
+        $iv  = openssl_random_pseudo_bytes(16);
+        $encrypted = openssl_encrypt($password, 'AES-256-CBC', $key, 0, $iv);
+
+        if ($encrypted) {
+            return 'enc::' . base64_encode($iv) . '::' . base64_encode($encrypted);
+        }
+
+        return $password;
     }
     
     /**

@@ -291,7 +291,7 @@ class Wp_Sms_Voipms_Rest_Api {
                "MAX(m.timestamp) AS last_message " .
                "FROM $contacts_table AS c " .
                "LEFT JOIN $messages_table AS m ON m.user_id = c.user_id AND (m.from_number = c.phone_number OR m.to_number = c.phone_number) " .
-               "$where_sql GROUP BY c.id ORDER BY c.name";
+               "$where_sql GROUP BY c.id, c.phone_number, c.name, c.email, c.notes, c.created_at, c.updated_at ORDER BY c.name";
 
         $query    = $wpdb->prepare($sql, $params);
         $contacts = $wpdb->get_results($query, ARRAY_A);

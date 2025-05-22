@@ -227,45 +227,26 @@ jQuery(document).ready(function($) {
         });
     });
     
-    // Gestion du sélecteur de média pour le logo
-    $('.upload-logo-button').on('click', function(e) {
-        e.preventDefault();
-        
-        var $logoContainer = $('.custom-logo-container');
-        var $logoIdInput = $('#custom_logo_id');
-        
-        var mediaUploader = wp.media({
-            title: '<?php _e('Sélectionner un logo', 'wp-sms-voipms'); ?>',
-            button: {
-                text: '<?php _e('Utiliser ce logo', 'wp-sms-voipms'); ?>'
-            },
-            multiple: false
-        });
-        
-        mediaUploader.on('select', function() {
-            var attachment = mediaUploader.state().get('selection').first().toJSON();
-            
-            $logoContainer.html('<img src="' + attachment.url + '" alt="Logo" style="max-width: 200px; height: auto; margin-bottom: 10px;" />');
-            $logoIdInput.val(attachment.id);
-            
-            $('.upload-logo-button').text('<?php _e('Changer le logo', 'wp-sms-voipms'); ?>');
-            
-            if ($('.remove-logo-button').length === 0) {
-                $('.upload-logo-button').after('<button type="button" class="button remove-logo-button"><?php _e('Supprimer le logo', 'wp-sms-voipms'); ?></button>');
-            }
-        });
-        
-        mediaUploader.open();
-    });
-    
-    // Suppression du logo
-    $(document).on('click', '.remove-logo-button', function(e) {
-        e.preventDefault();
-        
-        $('.custom-logo-container').empty();
-        $('#custom_logo_id').val('');
-        $('.upload-logo-button').text('<?php _e('Ajouter un logo', 'wp-sms-voipms'); ?>');
-        $(this).remove();
-    });
+    // Les actions de téléchargement et de suppression du logo sont gérées dans
+    // le script principal admin/js/wp-sms-voipms-admin.js
 });
+</script>
+
+<script type="text/javascript">
+var wp_sms_voipms_i18n = {
+    select_logo: '<?php _e('Sélectionner un logo', 'wp-sms-voipms'); ?>',
+    use_this_logo: '<?php _e('Utiliser ce logo', 'wp-sms-voipms'); ?>',
+    change_logo: '<?php _e('Changer le logo', 'wp-sms-voipms'); ?>',
+    add_logo: '<?php _e('Ajouter un logo', 'wp-sms-voipms'); ?>',
+    remove_logo: '<?php _e('Supprimer le logo', 'wp-sms-voipms'); ?>',
+    enter_phone_number: '<?php _e('Veuillez entrer un numéro de téléphone.', 'wp-sms-voipms'); ?>',
+    loading_messages: '<?php _e('Chargement des messages...', 'wp-sms-voipms'); ?>',
+    error_loading_contacts: '<?php _e('Erreur lors du chargement des contacts.', 'wp-sms-voipms'); ?>',
+    error_loading_messages: '<?php _e('Erreur lors du chargement des messages.', 'wp-sms-voipms'); ?>',
+    no_contacts: '<?php _e('Aucun contact trouvé. Cliquez sur "Nouvelle conversation" pour commencer.', 'wp-sms-voipms'); ?>',
+    no_messages: '<?php _e('Aucun message dans cette conversation. Envoyez un message pour commencer.', 'wp-sms-voipms'); ?>',
+    sending: '<?php _e('Envoi...', 'wp-sms-voipms'); ?>',
+    error_sending: '<?php _e('Erreur lors de l\'envoi du message.', 'wp-sms-voipms'); ?>',
+    send: '<?php _e('Envoyer', 'wp-sms-voipms'); ?>'
+};
 </script>

@@ -26,14 +26,26 @@ class Wp_Sms_Voipms_Api {
 
     private function decrypt_api_password($value) {
         if (strpos($value, 'enc::') === 0) {
-            $encrypted = base64_decode(substr($value, 5));
-            $key       = defined('AUTH_KEY') ? AUTH_KEY : wp_salt('auth');
-            $iv        = substr(hash('sha256', $key), 0, 16);
+            $key = defined('AUTH_KEY') ? AUTH_KEY : wp_salt('auth');
+
+            $data = substr($value, 5);
+            $parts = explode('::', $data);
+
+            if (count($parts) === 2) {
+                $iv        = base64_decode($parts[0]);
+                $encrypted = base64_decode($parts[1]);
+            } else {
+                // Ancien format sans IV
+                $encrypted = base64_decode($data);
+                $iv        = substr(hash('sha256', $key), 0, 16);
+            }
+
             $decrypted = openssl_decrypt($encrypted, 'AES-256-CBC', $key, 0, $iv);
             if (false !== $decrypted) {
                 return $decrypted;
             }
         }
+
         return $value;
     }
     

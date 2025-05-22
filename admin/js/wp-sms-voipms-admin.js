@@ -77,8 +77,7 @@
     function initializeContactsList() {
         // Si nous sommes sur la page d'interface SMS
         if (contactsList.length > 0) {
-            loadContacts();
-            
+
             // Recherche de contacts
             contactSearchInput.on('input', function() {
                 filterContacts($(this).val().toLowerCase());
@@ -116,7 +115,7 @@
         });
         
         // Fermer les modales (icône "X")
-        $('.modal-close, .wp-sms-voipms-modal-close').on('click', function() {
+        $(document).on('click', '.modal-close, .wp-sms-voipms-modal-close', function() {
             $(this).closest('.wp-sms-voipms-modal').hide();
         });
         
@@ -218,7 +217,7 @@
         if (isLoadingContacts) return;
         
         isLoadingContacts = true;
-        contactsList.html('<div class="loader"></div> ' + wp_sms_voipms_i18n.loading_contacts);
+        contactsList.html('<div class="loader"></div>');
         
         $.ajax({
             url: wp_sms_voipms.rest_url + 'contacts',

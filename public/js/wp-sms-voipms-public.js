@@ -33,6 +33,7 @@
         initializeModals();
         
         // Rafraîchir la liste des contacts uniquement sur demande
+                loadContacts();
         // setInterval(refreshContactsList, 30000);
     });
     
@@ -41,7 +42,6 @@
      */
     function initializeContactsList() {
         if (contactsList.length > 0) {
-            loadContacts();
             
             // Recherche de contacts
             contactSearchInput.on('input', function() {
@@ -80,7 +80,7 @@
         });
         
         // Fermer les modales (icône "X")
-        $('.modal-close, .wp-sms-voipms-modal-close').on('click', function() {
+        $(document).on('click', '.modal-close, .wp-sms-voipms-modal-close', function() {
             $(this).closest('.wp-sms-voipms-modal').hide();
         });
         
@@ -136,7 +136,7 @@
         if (isLoadingContacts) return;
         
         isLoadingContacts = true;
-        contactsList.html('<div class="wp-sms-voipms-loading">' + wp_sms_voipms.loading_contacts + '</div>');
+        contactsList.html('');
         
         $.ajax({
             url: wp_sms_voipms.rest_url + 'contacts',
@@ -209,6 +209,7 @@
     
     /**
      * Rafraîchir la liste des contacts
+                loadContacts();
      */
     function refreshContactsList() {
         if (contactsList.length > 0 && !isLoadingContacts) {

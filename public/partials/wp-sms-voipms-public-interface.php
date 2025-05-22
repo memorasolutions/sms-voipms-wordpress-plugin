@@ -43,7 +43,7 @@ $user_did = $api->get_user_did(get_current_user_id());
             </div>
             
             <div class="wp-sms-voipms-contacts-list" id="contacts-list">
-                <div class="wp-sms-voipms-loading"><?php _e('Chargement des contacts...', 'wp-sms-voipms'); ?></div>
+                
             </div>
             
             <div class="wp-sms-voipms-new-conversation">

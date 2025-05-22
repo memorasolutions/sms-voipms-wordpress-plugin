@@ -43,7 +43,9 @@ class Wp_Sms_Voipms_Shortcodes {
         // Ajouter les variables locales pour le script
         wp_localize_script($this->plugin_name, 'wp_sms_voipms', array(
             'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('wp_sms_voipms_nonce'),
+            // Utiliser le nonce WP REST pour éviter les erreurs d'authentification
+            // lors des appels à la REST API depuis le shortcode.
+            'nonce' => wp_create_nonce('wp_rest'),
             'rest_url' => rest_url('wp-sms-voipms/v1/'),
             'current_user_id' => get_current_user_id(),
             'platform_name' => get_option('wp_sms_voipms_platform_name', 'WP SMS VoIPms'),

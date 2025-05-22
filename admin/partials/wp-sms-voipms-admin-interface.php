@@ -32,7 +32,7 @@ $user_did = $api->get_user_did(get_current_user_id());
             </div>
             
             <div id="contacts-list">
-                <div class="loader"></div> <?php _e('Chargement des contacts...', 'wp-sms-voipms'); ?>
+                <div class="loader"></div>
             </div>
             
             <div style="padding: 10px;">
@@ -104,7 +104,6 @@ var wp_sms_voipms_i18n = {
     add_logo: '<?php _e('Ajouter un logo', 'wp-sms-voipms'); ?>',
     remove_logo: '<?php _e('Supprimer le logo', 'wp-sms-voipms'); ?>',
     enter_phone_number: '<?php _e('Veuillez entrer un numéro de téléphone.', 'wp-sms-voipms'); ?>',
-    loading_contacts: '<?php _e('Chargement des contacts...', 'wp-sms-voipms'); ?>',
     loading_messages: '<?php _e('Chargement des messages...', 'wp-sms-voipms'); ?>',
     error_loading_contacts: '<?php _e('Erreur lors du chargement des contacts.', 'wp-sms-voipms'); ?>',
     error_loading_messages: '<?php _e('Erreur lors du chargement des messages.', 'wp-sms-voipms'); ?>'

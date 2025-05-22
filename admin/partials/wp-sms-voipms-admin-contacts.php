@@ -45,7 +45,7 @@ $custom_logo_url = $custom_logo_id ? wp_get_attachment_url($custom_logo_id) : ''
         </thead>
         <tbody id="contacts-table-body">
             <tr>
-                <td colspan="5"><?php _e('Chargement des contacts...', 'wp-sms-voipms'); ?></td>
+                <td colspan="5"><div class="loader"></div></td>
             </tr>
         </tbody>
     </table>
@@ -123,7 +123,6 @@ var wp_sms_voipms_i18n = {
     add_logo: '<?php _e('Ajouter un logo', 'wp-sms-voipms'); ?>',
     remove_logo: '<?php _e('Supprimer le logo', 'wp-sms-voipms'); ?>',
     enter_phone_number: '<?php _e('Veuillez entrer un numéro de téléphone.', 'wp-sms-voipms'); ?>',
-    loading_contacts: '<?php _e('Chargement des contacts...', 'wp-sms-voipms'); ?>',
     loading_messages: '<?php _e('Chargement des messages...', 'wp-sms-voipms'); ?>',
     error_loading_contacts: '<?php _e('Erreur lors du chargement des contacts.', 'wp-sms-voipms'); ?>',
     error_loading_messages: '<?php _e('Erreur lors du chargement des messages.', 'wp-sms-voipms'); ?>'
@@ -135,9 +134,6 @@ jQuery(document).ready(function($) {
     function escapeHtml(str) {
         return $('<div>').text(str).html();
     }
-    // Charger les contacts
-    loadContacts();
-    
     // Recherche de contacts
     $('#search-contacts-btn').on('click', function() {
         var searchTerm = $('#contact-search-input').val().trim();
@@ -152,7 +148,7 @@ jQuery(document).ready(function($) {
     });
     
     // Ajouter un contact
-    $('#add-contact-btn').on('click', function() {
+    $(document).on('click', '#add-contact-btn', function() {
         // Réinitialiser le formulaire
         $('#contact-form')[0].reset();
         $('#contact-id').val('');
@@ -163,7 +159,7 @@ jQuery(document).ready(function($) {
     });
     
     // Fermer les modales
-    $('.modal-close').on('click', function() {
+    $(document).on('click', '.modal-close', function() {
         $(this).closest('.wp-sms-voipms-modal').hide();
     });
     
@@ -296,7 +292,7 @@ jQuery(document).ready(function($) {
             url += '?search=' + encodeURIComponent(searchTerm);
         }
         
-        $('#contacts-table-body').html('<tr><td colspan="5"><?php _e('Chargement des contacts...', 'wp-sms-voipms'); ?></td></tr>');
+        $('#contacts-table-body').html('<tr><td colspan="5"><div class="loader"></div></td></tr>');
         
         $.ajax({
             url: url,

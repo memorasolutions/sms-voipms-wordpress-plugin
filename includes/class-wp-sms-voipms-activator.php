@@ -79,6 +79,7 @@ class Wp_Sms_Voipms_Activator {
         add_option('wp_sms_voipms_message_limit_enabled', false);
         add_option('wp_sms_voipms_message_limit_count', 100);
         add_option('wp_sms_voipms_message_limit_period', 'day');
+        add_option('wp_sms_voipms_message_limit_period_value', 1);
         add_option('wp_sms_voipms_webhook_url', site_url('wp-json/wp-sms-voipms/v1/receive'));
     }
 

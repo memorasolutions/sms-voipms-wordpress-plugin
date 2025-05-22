@@ -10,12 +10,12 @@
 
     // Variables globales
     var currentContact = '';
-    var messagesContainer = $('#messages-container');
-    var contactsList = $('#contacts-list');
-    var messageForm = $('#message-form');
-    var messageText = $('#message-text');
-    var sendButton = $('#send-message-btn');
-    var contactSearchInput = $('#sms-contact-search');
+    var messagesContainer;
+    var contactsList;
+    var messageForm;
+    var messageText;
+    var sendButton;
+    var contactSearchInput;
     var contactsData = [];
     var isLoadingMessages = false;
     var isLoadingContacts = false;
@@ -27,6 +27,14 @@
      * Initialisation à la fin du chargement du DOM
      */
     $(document).ready(function() {
+        // Récupérer les éléments de l'interface après le chargement du DOM
+        messagesContainer = $('#messages-container');
+        contactsList = $('#contacts-list');
+        messageForm = $('#message-form');
+        messageText = $('#message-text');
+        sendButton = $('#send-message-btn');
+        contactSearchInput = $('#sms-contact-search');
+
         // Initialiser l'interface
         initializeContactsList();
         initializeMessageForm();

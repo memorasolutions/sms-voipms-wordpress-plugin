@@ -134,9 +134,10 @@ class Wp_Sms_Voipms_Rest_Api {
             $user_id = get_current_user_id();
             $limit  = get_option('wp_sms_voipms_message_limit_count', 100);
             $period = get_option('wp_sms_voipms_message_limit_period', 'day');
+            $period_value = get_option('wp_sms_voipms_message_limit_period_value', 1);
 
             // Récupérer le nombre de messages envoyés par cet utilisateur pour la période
-            $sent_count = $this->get_user_sent_count($user_id, $period);
+            $sent_count = $this->get_user_sent_count($user_id, $period, $period_value);
             
             if ($sent_count >= $limit) {
                 return new WP_Error(
@@ -164,18 +165,20 @@ class Wp_Sms_Voipms_Rest_Api {
     /**
      * Récupérer le nombre de messages envoyés par un utilisateur.
      */
-    private function get_user_sent_count($user_id, $period = 'day') {
+    private function get_user_sent_count($user_id, $period = 'day', $value = 1) {
         global $wpdb;
 
         $table_name = $wpdb->prefix . 'voipms_sms_messages';
 
         $periods = array(
-            'day'   => '1 DAY',
-            'week'  => '1 WEEK',
-            'month' => '1 MONTH'
+            'day'   => 'DAY',
+            'week'  => 'WEEK',
+            'month' => 'MONTH'
         );
 
-        $interval = isset($periods[$period]) ? $periods[$period] : '1 DAY';
+        $unit = isset($periods[$period]) ? $periods[$period] : 'DAY';
+        $value = absint($value) > 0 ? absint($value) : 1;
+        $interval = $value . ' ' . $unit;
 
         $query = $wpdb->prepare(
             "SELECT COUNT(*) FROM $table_name WHERE user_id = %d AND direction = 'outgoing' AND timestamp >= DATE_SUB(NOW(), INTERVAL $interval)",

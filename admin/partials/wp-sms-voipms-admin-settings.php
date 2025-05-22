@@ -154,8 +154,9 @@ if (!defined('WPINC')) {
                     <tr valign="top" class="limit-period-row" <?php echo !get_option('wp_sms_voipms_message_limit_enabled') ? 'style="display:none;"' : ''; ?>>
                         <th scope="row"><?php _e('Période de la limite', 'wp-sms-voipms'); ?></th>
                         <td>
+                            <?php $current_period = get_option('wp_sms_voipms_message_limit_period', 'day'); ?>
+                            <input type="number" name="wp_sms_voipms_message_limit_period_value" value="<?php echo esc_attr(get_option('wp_sms_voipms_message_limit_period_value', 1)); ?>" min="1" class="small-text" style="margin-right:5px;" />
                             <select name="wp_sms_voipms_message_limit_period">
-                                <?php $current_period = get_option('wp_sms_voipms_message_limit_period', 'day'); ?>
                                 <option value="day" <?php selected($current_period, 'day'); ?>><?php _e('Jour', 'wp-sms-voipms'); ?></option>
                                 <option value="week" <?php selected($current_period, 'week'); ?>><?php _e('Semaine', 'wp-sms-voipms'); ?></option>
                                 <option value="month" <?php selected($current_period, 'month'); ?>><?php _e('Mois', 'wp-sms-voipms'); ?></option>

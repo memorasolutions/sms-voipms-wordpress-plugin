@@ -34,6 +34,9 @@ class Wp_Sms_Voipms_Admin {
      */
     public function enqueue_scripts() {
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/wp-sms-voipms-admin.js', array('jquery'), $this->version, false);
+
+        // Assurer que la médiathèque WordPress est disponible pour le téléversement de logo
+        wp_enqueue_media();
         
         // Ajouter les variables locales pour le script
         wp_localize_script($this->plugin_name, 'wp_sms_voipms', array(
@@ -185,6 +188,12 @@ class Wp_Sms_Voipms_Admin {
             'wp_sms_voipms_limits_group',
             'wp_sms_voipms_message_limit_count',
             array('sanitize_callback' => 'absint')
+        );
+
+        register_setting(
+            'wp_sms_voipms_limits_group',
+            'wp_sms_voipms_message_limit_period',
+            array('sanitize_callback' => 'sanitize_text_field')
         );
     }
     

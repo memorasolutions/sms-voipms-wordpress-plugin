@@ -21,6 +21,8 @@ if (!defined('WPINC')) {
 define('WP_SMS_VOIPMS_VERSION', '1.0.0');
 define('WP_SMS_VOIPMS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WP_SMS_VOIPMS_PLUGIN_URL', plugin_dir_url(__FILE__));
+// Logo par défaut encodé en Base64 pour éviter les fichiers binaires
+define('WP_SMS_VOIPMS_DEFAULT_LOGO', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/58HAAMBAQAYbsyxAAAAAElFTkSuQmCC');
 
 /**
  * Le code qui s'exécute pendant l'activation du plugin.

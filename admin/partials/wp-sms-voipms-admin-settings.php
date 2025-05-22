@@ -151,6 +151,18 @@ if (!defined('WPINC')) {
                             <p class="description"><?php _e('Nombre maximum de messages qu\'un utilisateur peut envoyer', 'wp-sms-voipms'); ?></p>
                         </td>
                     </tr>
+                    <tr valign="top" class="limit-period-row" <?php echo !get_option('wp_sms_voipms_message_limit_enabled') ? 'style="display:none;"' : ''; ?>>
+                        <th scope="row"><?php _e('Période de la limite', 'wp-sms-voipms'); ?></th>
+                        <td>
+                            <select name="wp_sms_voipms_message_limit_period">
+                                <?php $current_period = get_option('wp_sms_voipms_message_limit_period', 'day'); ?>
+                                <option value="day" <?php selected($current_period, 'day'); ?>><?php _e('Jour', 'wp-sms-voipms'); ?></option>
+                                <option value="week" <?php selected($current_period, 'week'); ?>><?php _e('Semaine', 'wp-sms-voipms'); ?></option>
+                                <option value="month" <?php selected($current_period, 'month'); ?>><?php _e('Mois', 'wp-sms-voipms'); ?></option>
+                            </select>
+                            <p class="description"><?php _e('Période durant laquelle le nombre maximum est comptabilisé', 'wp-sms-voipms'); ?></p>
+                        </td>
+                    </tr>
                 </table>
                 
                 <?php submit_button(); ?>
@@ -177,9 +189,9 @@ jQuery(document).ready(function($) {
     // Gestion de la case à cocher des limites
     $('input[name="wp_sms_voipms_message_limit_enabled"]').on('change', function() {
         if ($(this).is(':checked')) {
-            $('.limit-count-row').show();
+            $('.limit-count-row, .limit-period-row').show();
         } else {
-            $('.limit-count-row').hide();
+            $('.limit-count-row, .limit-period-row').hide();
         }
     });
     

@@ -270,13 +270,31 @@ class Wp_Sms_Voipms_Rest_Api {
     public function get_contacts($request) {
         global $wpdb;
 
-        $table = $wpdb->prefix . 'voipms_sms_contacts';
-        $user_id = get_current_user_id();
+        $contacts_table  = $wpdb->prefix . 'voipms_sms_contacts';
+        $messages_table  = $wpdb->prefix . 'voipms_sms_messages';
+        $user_id         = get_current_user_id();
 
-        $contacts = $wpdb->get_results(
-            $wpdb->prepare("SELECT id, phone_number, name, email, notes, created_at, updated_at FROM $table WHERE user_id = %d ORDER BY name", $user_id),
-            ARRAY_A
-        );
+        $search   = $request->get_param('search');
+        $where    = array('c.user_id = %d');
+        $params   = array($user_id);
+
+        if (!empty($search)) {
+            $like      = '%' . $wpdb->esc_like($search) . '%';
+            $where[]   = '(c.name LIKE %s OR c.phone_number LIKE %s)';
+            $params[]  = $like;
+            $params[]  = $like;
+        }
+
+        $where_sql = 'WHERE ' . implode(' AND ', $where);
+
+        $sql = "SELECT c.id, c.phone_number, c.name, c.email, c.notes, c.created_at, c.updated_at, " .
+               "MAX(m.timestamp) AS last_message " .
+               "FROM $contacts_table AS c " .
+               "LEFT JOIN $messages_table AS m ON m.user_id = c.user_id AND (m.from_number = c.phone_number OR m.to_number = c.phone_number) " .
+               "$where_sql GROUP BY c.id ORDER BY c.name";
+
+        $query    = $wpdb->prepare($sql, $params);
+        $contacts = $wpdb->get_results($query, ARRAY_A);
 
         return new WP_REST_Response($contacts, 200);
     }

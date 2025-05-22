@@ -20,7 +20,21 @@ class Wp_Sms_Voipms_Api {
      */
     public function __construct() {
         $this->api_username = get_option('wp_sms_voipms_api_username');
-        $this->api_password = get_option('wp_sms_voipms_api_password');
+        $stored             = get_option('wp_sms_voipms_api_password');
+        $this->api_password = $this->decrypt_api_password($stored);
+    }
+
+    private function decrypt_api_password($value) {
+        if (strpos($value, 'enc::') === 0) {
+            $encrypted = base64_decode(substr($value, 5));
+            $key       = defined('AUTH_KEY') ? AUTH_KEY : wp_salt('auth');
+            $iv        = substr(hash('sha256', $key), 0, 16);
+            $decrypted = openssl_decrypt($encrypted, 'AES-256-CBC', $key, 0, $iv);
+            if (false !== $decrypted) {
+                return $decrypted;
+            }
+        }
+        return $value;
     }
     
     /**

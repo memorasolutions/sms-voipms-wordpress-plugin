@@ -40,8 +40,16 @@ function deactivate_wp_sms_voipms() {
     Wp_Sms_Voipms_Deactivator::deactivate();
 }
 
+/**
+ * Code exécuté lors de la désinstallation du plugin.
+ */
+function wp_sms_voipms_uninstall() {
+    include_once WP_SMS_VOIPMS_PLUGIN_DIR . 'uninstall.php';
+}
+
 register_activation_hook(__FILE__, 'activate_wp_sms_voipms');
 register_deactivation_hook(__FILE__, 'deactivate_wp_sms_voipms');
+register_uninstall_hook(__FILE__, 'wp_sms_voipms_uninstall');
 
 /**
  * Le noyau du plugin.

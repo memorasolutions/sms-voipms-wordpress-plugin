@@ -235,14 +235,18 @@ jQuery(document).ready(function($) {
             },
             error: function(xhr) {
                 var errorMsg = '';
-                
-                try {
-                    var response = JSON.parse(xhr.responseText);
-                    errorMsg = response.message || '<?php _e('Erreur lors de l\'enregistrement du contact.', 'wp-sms-voipms'); ?>';
-                } catch (e) {
-                    errorMsg = '<?php _e('Erreur lors de l\'enregistrement du contact.', 'wp-sms-voipms'); ?>';
+
+                if (xhr.status === 403) {
+                    errorMsg = '<?php _e('Vous n\'avez pas la permission d\'ajouter des contacts.', 'wp-sms-voipms'); ?>';
+                } else {
+                    try {
+                        var response = JSON.parse(xhr.responseText);
+                        errorMsg = response.message || '<?php _e('Erreur lors de l\'enregistrement du contact.', 'wp-sms-voipms'); ?>';
+                    } catch (e) {
+                        errorMsg = '<?php _e('Erreur lors de l\'enregistrement du contact.', 'wp-sms-voipms'); ?>';
+                    }
                 }
-                
+
                 alert(errorMsg);
             }
         });

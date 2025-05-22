@@ -63,7 +63,7 @@ class Wp_Sms_Voipms_Rest_Api {
             array(
                 'methods'  => 'POST',
                 'callback' => array($this, 'create_contact'),
-                'permission_callback' => array($this, 'manage_settings_permissions_check'),
+                'permission_callback' => array($this, 'send_sms_permissions_check'),
             ),
         ));
 
@@ -76,12 +76,12 @@ class Wp_Sms_Voipms_Rest_Api {
             array(
                 'methods'  => 'PUT',
                 'callback' => array($this, 'update_contact'),
-                'permission_callback' => array($this, 'manage_settings_permissions_check'),
+                'permission_callback' => array($this, 'send_sms_permissions_check'),
             ),
             array(
                 'methods'  => 'DELETE',
                 'callback' => array($this, 'delete_contact'),
-                'permission_callback' => array($this, 'manage_settings_permissions_check'),
+                'permission_callback' => array($this, 'send_sms_permissions_check'),
             ),
         ));
     }

@@ -9,7 +9,14 @@ $platform_name = get_option('wp_sms_voipms_platform_name', 'WP SMS VoIPms');
 $primary_color = get_option('wp_sms_voipms_primary_color', '#007bff');
 $secondary_color = get_option('wp_sms_voipms_secondary_color', '#6c757d');
 $custom_logo_id = get_option('wp_sms_voipms_custom_logo');
-$custom_logo_url = $custom_logo_id ? wp_get_attachment_url($custom_logo_id) : WP_SMS_VOIPMS_PLUGIN_URL . 'public/images/default-logo.png';
+$custom_logo_url = '';
+
+// Utiliser le logo personnalisé s'il existe, sinon le logo par défaut encodé
+if ($custom_logo_id) {
+    $custom_logo_url = wp_get_attachment_url($custom_logo_id);
+} elseif (defined('WP_SMS_VOIPMS_DEFAULT_LOGO')) {
+    $custom_logo_url = WP_SMS_VOIPMS_DEFAULT_LOGO;
+}
 
 // Récupérer le numéro DID de l'utilisateur
 $api = new Wp_Sms_Voipms_Api();

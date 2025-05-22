@@ -328,6 +328,17 @@
     padding: 20px;
     color: var(--secondary-color);
 }
+.wp-sms-voipms-error {
+    color: var(--danger-color);
+    text-align: center;
+    padding: 20px;
+}
+.wp-sms-voipms-empty-list {
+    color: var(--secondary-color);
+    text-align: center;
+    padding: 20px;
+}
+
 
 /* Responsive */
 @media (max-width: 768px) {

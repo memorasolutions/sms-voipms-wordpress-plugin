@@ -134,6 +134,8 @@ jQuery(document).ready(function($) {
     function escapeHtml(str) {
         return $('<div>').text(str).html();
     }
+    // Charger la liste des contacts au chargement de la page
+    loadContacts();
     // Recherche de contacts
     $('#search-contacts-btn').on('click', function() {
         var searchTerm = $('#contact-search-input').val().trim();

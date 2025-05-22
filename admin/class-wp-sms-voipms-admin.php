@@ -195,6 +195,12 @@ class Wp_Sms_Voipms_Admin {
             'wp_sms_voipms_message_limit_period',
             array('sanitize_callback' => 'sanitize_text_field')
         );
+
+        register_setting(
+            'wp_sms_voipms_limits_group',
+            'wp_sms_voipms_message_limit_period_value',
+            array('sanitize_callback' => 'absint')
+        );
     }
     
     /**

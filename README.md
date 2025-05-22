@@ -6,6 +6,7 @@ Ce plugin permet d'envoyer et de recevoir des SMS via l'API VoIP.ms directement 
 1. Téléversez le dossier du plugin dans `wp-content/plugins`.
 2. Activez le plugin depuis l'administration WordPress.
 3. Rendez-vous dans **SMS VoIPms → Réglages** pour renseigner vos identifiants API et le DID par défaut.
+4. Le mot de passe API est chiffré avant d'être enregistré en base de données.
 
 ## Utilisation
 - Accédez à l'interface SMS depuis le menu **SMS VoIPms**.

@@ -210,9 +210,15 @@ class Wp_Sms_Voipms_Admin {
      */
     public function encrypt_api_password($password) {
         if (!empty($password)) {
-            return $password; // Dans une vraie implémentation, on utiliserait une méthode de cryptage
+            $key = defined('AUTH_KEY') ? AUTH_KEY : wp_salt('auth');
+            $iv  = substr(hash('sha256', $key), 0, 16);
+            $encrypted = openssl_encrypt($password, 'AES-256-CBC', $key, 0, $iv);
+            if ($encrypted) {
+                return 'enc::' . base64_encode($encrypted);
+            }
+            return $password;
         }
-        return get_option('wp_sms_voipms_api_password'); // Conserver l'ancien si vide
+        return get_option('wp_sms_voipms_api_password');
     }
     
     /**

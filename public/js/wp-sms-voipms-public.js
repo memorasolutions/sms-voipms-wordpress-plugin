@@ -32,8 +32,8 @@
         initializeMessageForm();
         initializeModals();
         
-        // Rafraîchir la liste des contacts périodiquement
-        setInterval(refreshContactsList, 30000);
+        // Rafraîchir la liste des contacts uniquement sur demande
+        // setInterval(refreshContactsList, 30000);
     });
     
     /**
@@ -79,8 +79,8 @@
             $('#new-conversation-modal').show();
         });
         
-        // Fermer les modales
-        $('.wp-sms-voipms-modal-close').on('click', function() {
+        // Fermer les modales (icône "X")
+        $('.modal-close, .wp-sms-voipms-modal-close').on('click', function() {
             $(this).closest('.wp-sms-voipms-modal').hide();
         });
         

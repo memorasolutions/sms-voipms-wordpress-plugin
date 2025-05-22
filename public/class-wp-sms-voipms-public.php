@@ -57,7 +57,8 @@ class Wp_Sms_Voipms_Public {
         // Ajouter les variables locales pour le script
         wp_localize_script($this->plugin_name, 'wp_sms_voipms', array(
             'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('wp_sms_voipms_nonce'),
+            // Utiliser le nonce WP REST pour les requêtes AJAX.
+            'nonce' => wp_create_nonce('wp_rest'),
             'rest_url' => rest_url('wp-sms-voipms/v1/'),
             'current_user_id' => get_current_user_id(),
             'loading_messages' => __('Chargement des messages...', 'wp-sms-voipms'),

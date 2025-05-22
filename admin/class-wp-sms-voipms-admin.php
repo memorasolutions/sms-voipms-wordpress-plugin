@@ -40,10 +40,12 @@ class Wp_Sms_Voipms_Admin {
         
         // Ajouter les variables locales pour le script
         wp_localize_script($this->plugin_name, 'wp_sms_voipms', array(
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('wp_sms_voipms_nonce'),
+            'ajax_url'   => admin_url('admin-ajax.php'),
+            // Utiliser le nonce par défaut de l’API REST pour éviter l’erreur
+            // "La vérification du cookie a échoué" lors des requêtes AJAX.
+            'nonce'      => wp_create_nonce('wp_rest'),
             'default_did' => get_option('wp_sms_voipms_did'),
-            'rest_url' => rest_url('wp-sms-voipms/v1/')
+            'rest_url'   => rest_url('wp-sms-voipms/v1/')
         ));
     }
 

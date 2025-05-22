@@ -35,18 +35,28 @@
         sendButton = $('#send-message-btn');
         contactSearchInput = $('#contact-search');
 
-        // Initialiser l'interface
-        initializeTabs();
-        initializeContactsList();
-        initializeMessageForm();
-        initializeModals();
-        initializeMediaUploader();
-        
-        // Vérifier le hash URL pour activer l'onglet approprié
-        checkUrlHash();
+        // Initialiser l'interface uniquement si les éléments requis existent
+        if ($('.nav-tab').length) {
+            initializeTabs();
+            checkUrlHash();
+        }
 
-        // Charger la liste des contacts au chargement de la page
-        loadContacts();
+        if (contactsList.length) {
+            initializeContactsList();
+            loadContacts();
+        }
+
+        if (messageForm.length) {
+            initializeMessageForm();
+        }
+
+        if ($('#new-conversation-btn').length || $('.wp-sms-voipms-modal').length) {
+            initializeModals();
+        }
+
+        if ($('.upload-logo-button').length) {
+            initializeMediaUploader();
+        }
 
         // Rafraîchir la liste des contacts uniquement sur demande
         // setInterval(refreshContactsList, 30000);

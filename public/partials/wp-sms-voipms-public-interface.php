@@ -105,3 +105,5 @@ $user_did = $api->get_user_did(get_current_user_id());
         </div>
     </div>
 </div>
+
+<div class="wp-sms-voipms-footer">Créé avec ❤️ par <a href="https://memora.solutions" target="_blank">MEMORA solutions</a></div>

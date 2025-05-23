@@ -3,7 +3,7 @@
  * Plugin Name: WP SMS VoIPms
  * Plugin URI: https://memora.solutions
  * Description: Plugin permettant d'envoyer et recevoir des SMS via l'API VoIP.ms directement depuis WordPress.
- * Version: 1.0.1
+ * Version: 1.0.0
  * Author: MEMORA Solutions
  * Author URI: https://memora.solutions
  * License: GPL-2.0+
@@ -18,7 +18,7 @@ if (!defined('WPINC')) {
 }
 
 // Définition des constantes
-define('WP_SMS_VOIPMS_VERSION', '1.0.1');
+define('WP_SMS_VOIPMS_VERSION', '1.0.0');
 define('WP_SMS_VOIPMS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WP_SMS_VOIPMS_PLUGIN_URL', plugin_dir_url(__FILE__));
 // Logo par défaut encodé en Base64 pour éviter les fichiers binaires

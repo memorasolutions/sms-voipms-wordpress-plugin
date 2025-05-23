@@ -52,7 +52,7 @@ class Wp_Sms_Voipms_Public {
      * Enregistrer les scripts pour la partie publique.
      */
     public function enqueue_scripts() {
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/wp-sms-voipms-public.js', array('jquery'), $this->version, false);
+        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/wp-sms-voipms-public.js', array('jquery'), $this->version, true);
         
         // Ajouter les variables locales pour le script
         wp_localize_script($this->plugin_name, 'wp_sms_voipms', array(

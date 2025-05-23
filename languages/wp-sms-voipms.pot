@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP SMS VoIPms 1.0.0\n"
+"Project-Id-Version: WP SMS VoIPms 1.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-sms-voipms\n"
 "POT-Creation-Date: 2025-05-21T12:00:00+00:00\n"
 "MIME-Version: 1.0\n"

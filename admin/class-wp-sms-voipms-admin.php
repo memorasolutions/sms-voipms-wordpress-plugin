@@ -33,7 +33,7 @@ class Wp_Sms_Voipms_Admin {
      * Enregistrer les scripts pour l'administration.
      */
     public function enqueue_scripts() {
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/wp-sms-voipms-admin.js', array('jquery'), $this->version, false);
+        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/wp-sms-voipms-admin.js', array('jquery'), $this->version, true);
 
         // Assurer que la médiathèque WordPress est disponible pour le téléversement de logo
         wp_enqueue_media();
@@ -218,7 +218,7 @@ class Wp_Sms_Voipms_Admin {
         }
 
         $key = defined('AUTH_KEY') ? AUTH_KEY : wp_salt('auth');
-        $iv  = openssl_random_pseudo_bytes(16);
+        $iv  = random_bytes(16);
         $encrypted = openssl_encrypt($password, 'AES-256-CBC', $key, 0, $iv);
 
         if ($encrypted) {

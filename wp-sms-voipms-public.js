@@ -235,9 +235,12 @@
         $('.wp-sms-voipms-contact-item').removeClass('active');
         $('.wp-sms-voipms-contact-item[data-phone="' + phoneNumber + '"]').addClass('active');
         
-        // Mettre à jour l'en-tête de conversation - CORRECTION DU TITRE EN DOUBLE
+        // Mettre à jour l'en-tête de conversation
         $('.wp-sms-voipms-contact-info .contact-name').text(name);
         $('.wp-sms-voipms-contact-info .contact-number').text(formatPhoneNumber(phoneNumber));
+        if (typeof wp_sms_voipms.platform_name !== 'undefined') {
+            document.title = name + ' - ' + wp_sms_voipms.platform_name;
+        }
         
         // Activer le formulaire d'envoi
         messageText.prop('disabled', false).focus();

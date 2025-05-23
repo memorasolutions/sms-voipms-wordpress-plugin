@@ -32,3 +32,9 @@ $contacts_table = $wpdb->prefix . 'voipms_sms_contacts';
 $wpdb->query("DROP TABLE IF EXISTS $messages_table");
 $wpdb->query("DROP TABLE IF EXISTS $contacts_table");
 
+// Remove assigned DID user meta
+$users = get_users(array('meta_key' => 'wp_sms_voipms_assigned_did', 'fields' => 'ID'));
+foreach ($users as $user_id) {
+    delete_user_meta($user_id, 'wp_sms_voipms_assigned_did');
+}
+

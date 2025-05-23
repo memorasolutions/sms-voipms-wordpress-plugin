@@ -25,19 +25,39 @@ class Wp_Sms_Voipms_Admin {
     /**
      * Enregistrer les styles pour l'administration.
      */
-    public function enqueue_styles() {
-        wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/wp-sms-voipms-admin.css', array(), $this->version, 'all');
+    public function enqueue_styles($hook) {
+        if (!isset($_GET['page']) || strpos($_GET['page'], 'wp-sms-voipms') !== 0) {
+            return;
+        }
+
+        wp_enqueue_style(
+            $this->plugin_name,
+            plugin_dir_url(__FILE__) . 'css/wp-sms-voipms-admin.css',
+            array(),
+            $this->version,
+            'all'
+        );
     }
 
     /**
      * Enregistrer les scripts pour l'administration.
      */
-    public function enqueue_scripts() {
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/wp-sms-voipms-admin.js', array('jquery'), $this->version, false);
+    public function enqueue_scripts($hook) {
+        if (!isset($_GET['page']) || strpos($_GET['page'], 'wp-sms-voipms') !== 0) {
+            return;
+        }
+
+        wp_enqueue_script(
+            $this->plugin_name,
+            plugin_dir_url(__FILE__) . 'js/wp-sms-voipms-admin.js',
+            array('jquery'),
+            $this->version,
+            false
+        );
 
         // Assurer que la médiathèque WordPress est disponible pour le téléversement de logo
         wp_enqueue_media();
-        
+
         // Ajouter les variables locales pour le script
         wp_localize_script($this->plugin_name, 'wp_sms_voipms', array(
             'ajax_url'   => admin_url('admin-ajax.php'),

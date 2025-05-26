@@ -190,6 +190,10 @@
      * Initialiser l'outil de sélection de médias pour le logo
      */
     function initializeMediaUploader() {
+        if (typeof wp.media === 'undefined') {
+            console.error('wp.media is not available');
+            return;
+        }
         // Télécharger un logo
         $('.upload-logo-button').on('click', function(e) {
             e.preventDefault();
@@ -330,6 +334,9 @@
         
         $('.conversation-header .contact-name').text(name);
         $('.conversation-header .contact-number').text(formatPhoneNumber(phoneNumber));
+        if (typeof wp_sms_voipms.platform_name !== 'undefined') {
+            document.title = name + ' - ' + wp_sms_voipms.platform_name;
+        }
         
         // Activer le formulaire d'envoi
         if (messageText.length > 0) {

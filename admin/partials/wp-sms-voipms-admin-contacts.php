@@ -149,7 +149,7 @@ jQuery(document).ready(function($) {
         // Réinitialiser le formulaire
         $('#contact-form')[0].reset();
         $('#contact-id').val('');
-        $('#contact-modal-title').text('<?php _e('Ajouter un contact', 'wp-sms-voipms'); ?>');
+        $('#contact-modal-title').text("<?php echo esc_js(__('Ajouter un contact', 'wp-sms-voipms')); ?>");
         
         // Afficher la modale
         $('#contact-form-modal').show();
@@ -188,13 +188,13 @@ jQuery(document).ready(function($) {
         var notes = $('#contact-notes').val().trim();
         
         if (!name || !phone) {
-            alert('<?php _e('Le nom et le numéro sont obligatoires.', 'wp-sms-voipms'); ?>');
+            alert("<?php echo esc_js(__('Le nom et le numéro sont obligatoires.', 'wp-sms-voipms')); ?>");
             return;
         }
         
         // Vérifier le format du numéro de téléphone
         if (phone.length < 10) {
-            alert('<?php _e('Le numéro de téléphone doit contenir au moins 10 chiffres.', 'wp-sms-voipms'); ?>');
+            alert("<?php echo esc_js(__('Le numéro de téléphone doit contenir au moins 10 chiffres.', 'wp-sms-voipms')); ?>");
             return;
         }
         
@@ -230,13 +230,13 @@ jQuery(document).ready(function($) {
                 var errorMsg = '';
 
                 if (xhr.status === 403) {
-                    errorMsg = '<?php _e('Vous n\'avez pas la permission d\'ajouter des contacts.', 'wp-sms-voipms'); ?>';
+                    errorMsg = "<?php echo esc_js(__('Vous n\'avez pas la permission d\'ajouter des contacts.', 'wp-sms-voipms')); ?>";
                 } else {
                     var response = xhr.responseJSON;
                     if (!response) {
                         try { response = JSON.parse(xhr.responseText); } catch (e) { response = {}; }
                     }
-                    errorMsg = (response && response.message) ? response.message : '<?php _e('Erreur lors de l\'enregistrement du contact.', 'wp-sms-voipms'); ?>';
+                    errorMsg = (response && response.message) ? response.message : "<?php echo esc_js(__('Erreur lors de l\'enregistrement du contact.', 'wp-sms-voipms')); ?>";
                 }
 
                 alert(errorMsg);
@@ -270,9 +270,9 @@ jQuery(document).ready(function($) {
                 
                 try {
                     var response = JSON.parse(xhr.responseText);
-                    errorMsg = response.message || '<?php _e('Erreur lors de la suppression du contact.', 'wp-sms-voipms'); ?>';
+                    errorMsg = response.message || "<?php echo esc_js(__('Erreur lors de la suppression du contact.', 'wp-sms-voipms')); ?>";
                 } catch (e) {
-                    errorMsg = '<?php _e('Erreur lors de la suppression du contact.', 'wp-sms-voipms'); ?>';
+                    errorMsg = "<?php echo esc_js(__('Erreur lors de la suppression du contact.', 'wp-sms-voipms')); ?>";
                 }
                 
                 alert(errorMsg);
@@ -319,7 +319,7 @@ jQuery(document).ready(function($) {
         
         for (var i = 0; i < contacts.length; i++) {
             var contact = contacts[i];
-            var lastMessage = contact.last_message ? formatTimestamp(contact.last_message) : '<?php _e('Aucun', 'wp-sms-voipms'); ?>';
+            var lastMessage = contact.last_message ? formatTimestamp(contact.last_message) : "<?php echo esc_js(__('Aucun', 'wp-sms-voipms')); ?>";
             
             html += '<tr>';
             html += '<td>' + escapeHtml(contact.name) + '</td>';
@@ -372,13 +372,13 @@ jQuery(document).ready(function($) {
                 $('#contact-notes').val(response.notes || '');
                 
                 // Changer le titre
-                $('#contact-modal-title').text('<?php _e('Modifier le contact', 'wp-sms-voipms'); ?>');
+                $('#contact-modal-title').text("<?php echo esc_js(__('Modifier le contact', 'wp-sms-voipms')); ?>");
                 
                 // Afficher la modale
                 $('#contact-form-modal').show();
             },
             error: function(xhr) {
-                alert('<?php _e('Erreur lors du chargement du contact.', 'wp-sms-voipms'); ?>');
+                alert("<?php echo esc_js(__('Erreur lors du chargement du contact.', 'wp-sms-voipms')); ?>");
             }
         });
     }
@@ -420,12 +420,12 @@ jQuery(document).ready(function($) {
         
         // Si c'est aujourd'hui
         if (date.toDateString() === now.toDateString()) {
-            return '<?php _e('Aujourd\'hui', 'wp-sms-voipms'); ?>, ' + timeString;
+            return "<?php echo esc_js(__('Aujourd'hui', 'wp-sms-voipms')); ?>, " + timeString;
         }
         
         // Si c'est hier
         if (date.toDateString() === yesterday.toDateString()) {
-            return '<?php _e('Hier', 'wp-sms-voipms'); ?>, ' + timeString;
+            return "<?php echo esc_js(__('Hier', 'wp-sms-voipms')); ?>, " + timeString;
         }
         
         // Sinon, afficher la date complète

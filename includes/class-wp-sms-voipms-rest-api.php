@@ -337,7 +337,15 @@ class Wp_Sms_Voipms_Rest_Api {
             return new WP_Error('missing_parameters', __('Numéro et nom requis.', 'wp-sms-voipms'), array('status' => 400));
         }
 
+        if (strlen($phone) < 10) {
+            return new WP_Error('invalid_phone', __('Numéro de téléphone invalide.', 'wp-sms-voipms'), array('status' => 400));
+        }
+
         $table = $wpdb->prefix . 'voipms_sms_contacts';
+        $exists = $wpdb->get_var($wpdb->prepare("SELECT id FROM $table WHERE phone_number = %s AND user_id = %d", $phone, $user_id));
+        if ($exists) {
+            return new WP_Error('contact_exists', __('Ce contact existe déjà.', 'wp-sms-voipms'), array('status' => 409));
+        }
         $result = $wpdb->insert(
             $table,
             array(
